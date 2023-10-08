@@ -241,7 +241,7 @@ router.get("/department/getAll", async (request, response) => {
 // ROUTE 3: Department Wise -> PUT request "admin/placements/department/editRecord"
 router.put("/department/editRecord", async (request, response) => {
     try {
-        let year = request.body.Response[0].Year;
+        let _id  = request.body.Response[0]._id;
         let newRecord = {
             Year: request.body.Response[1].Year,
             Department: request.body.Response[1].Department,
@@ -250,14 +250,15 @@ router.put("/department/editRecord", async (request, response) => {
             PostgradTotal: request.body.Response[1].PostgradTotal,
             PostgradPlaced: request.body.Response[1].PostgradPlaced
         }
-        let record = await Department.find({ Year: year });
-        if (record.length === 0) {
-            response.status(400).send("Record Not Found");
+        let record = await Department.findById({_id:_id });
+        if (!record) {
+            return response.status(400).send("Record Not Found");
         }
         else {
+            // console.log(record);
             record = await Department.findOneAndUpdate(
                 {
-                    Year: year
+                    _id:_id
                 },
                 {
                     $set: newRecord
@@ -266,7 +267,7 @@ router.put("/department/editRecord", async (request, response) => {
                     new: true
                 }
             );
-            response.status(200).send("Record changed successfully");
+            response.status(200).json(record);
         }
     }
     catch (err) {

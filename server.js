@@ -6,6 +6,7 @@ const adminRoute = require("./routes/adminroute");
 const certificateRoute = require("./routes/certificateroute");
 const eventRoute = require("./routes/eventroute");
 const Placements = require("./routes/placementsRoute");
+const JAF = require("./routes/jaf");
 const News = require("./routes/newsRoute");
 
 const app = express();

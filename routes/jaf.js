@@ -22,7 +22,6 @@ const upload = multer({
 // same name as formData.append('file', file); i.e 'file' as 1st parameter
 router.post('/uploaded', upload.array('file'), async (req, res) => {
   res.send("req");
-
   const emailFrom = req.body.from;
   const emailSub = req.body.subject;
   const emailSpecifications = req.body.specifications;

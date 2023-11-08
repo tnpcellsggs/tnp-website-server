@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { response } = require("express");
+// const { response } = require("express");
 const Placements = require("../models/placementsYearWise");
 const GraphData = require("../models/graphModels");
 const Department = require("../models/deptWise");
@@ -63,7 +63,6 @@ router.put("/yearWise/edit", async (request, response) => {
     try {
         // creating a new document for every year record
         let year = request.body.Response[0]["Year"];
-        console.log(request.body.Response[0]["Year"]);
         const newRecord = {
             Year: request.body.Response[1].Year,
             BTechOnRoll: request.body.Response[1].BTechOnRoll,

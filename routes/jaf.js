@@ -32,13 +32,16 @@ oAuth2Client.setCredentials({
 // same name as formData.append('file', file); i.e 'file' as 1st parameter
 router.post('/uploaded', upload.array('file'), async (req, res) => {
   try {
+
     const accessTokens = await oAuth2Client.getAccessToken();
     const emailFrom = req.body.from;
     const emailSub = req.body.subject;
     const emailSpecifications = req.body.specifications;
     const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // true for 465, false for other ports
       service: 'gmail',
-
       auth: {
         type: "OAuth2",
         user: process.env.GMAIL_USERNAME,
@@ -46,6 +49,9 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         refreshToken: process.env.OAUTH_REFRESH_TOKEN,
         accessToken: accessTokens
+      },
+      tls: {
+        rejectUnauthorized: false,
       }
     });
 
@@ -86,12 +92,15 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
 // 2) endpoint where the form is submitted by fillin manually
 router.post('/filled', upload.none(), async (req, res) => {
   try {
-    const accessTokens = await oAuth2Client.getAccessToken();
 
+    const accessTokens = await oAuth2Client.getAccessToken();
     let jafFormData = req.body;
     const transporter = nodemailer.createTransport({
       service: 'gmail',
-
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // true for 465, false for other ports
+      service: 'gmail',
       auth: {
         type: "OAuth2",
         user: process.env.GMAIL_USERNAME,
@@ -100,6 +109,9 @@ router.post('/filled', upload.none(), async (req, res) => {
         refreshToken: process.env.OAUTH_REFRESH_TOKEN,
         accessToken: accessTokens
       },
+      tls: {
+        rejectUnauthorized: false,
+      }
     });
 
     const mailOptions = {
@@ -127,11 +139,14 @@ router.post('/filled', upload.none(), async (req, res) => {
 // 3) endpoint for company interest form
 router.post('/interestForm', upload.none(), async (req, res) => {
   try {
+
     const accessTokens = await oAuth2Client.getAccessToken();
-
     let jafFormData = req.body;
-
     const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // true for 465, false for other ports
       service: 'gmail',
       auth: {
         type: "OAuth2",
@@ -139,8 +154,11 @@ router.post('/interestForm', upload.none(), async (req, res) => {
         clientId: process.env.OAUTH_CLIENT_ID,
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        accessToken:accessTokens
+        accessToken: accessTokens
       },
+      tls: {
+        rejectUnauthorized: false,
+      }
     });
 
     const mailOptions = {

@@ -3,9 +3,10 @@ const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const multer = require('multer');
 const mime = require('mime-types');
-const config = require("../config");
+require('dotenv').config();
+// const config = require("../config");
 
-// const host = config.REACT_APP_REACT_APP_REQURL;
+// const host = process.env.REACT_APP_REACT_APP_REQURL;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads');
@@ -21,13 +22,11 @@ const upload = multer({
 });
 
 // Authorization for the the access
-const oAuth2Client = new google.auth.OAuth2(config.clientId, config.clientSecret, config.redirectURI);
+const oAuth2Client = new google.auth.OAuth2(process.env.OAUTH_CLIENT_ID, process.env.OAUTH_CLIENT_SECRET, process.env.REDIRECT_URI);
 
 oAuth2Client.setCredentials({
-  access_token: config.accessToken
+  access_token: process.env.OAUTH_ACCESS_TOKEN
 });
-
-// console.log(config.accessToken+"Hello");
 
 // 1) endpoint where the form is uploaded as a file
 // same name as formData.append('file', file); i.e 'file' as 1st parameter
@@ -42,10 +41,10 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
 
       auth: {
         type: "OAuth2",
-        user: config.userName,
-        clientId: config.clientId,
-        clientSecret: config.clientSecret,
-        refreshToken: config.refreshToken,
+        user: process.env.GMAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
         accessToken: accessTokens
       }
     });
@@ -95,10 +94,10 @@ router.post('/filled', upload.none(), async (req, res) => {
 
       auth: {
         type: "OAuth2",
-        user: config.userName,
-        clientId: config.clientId,
-        clientSecret: config.clientSecret,
-        refreshToken: config.refreshToken,
+        user: process.env.GMAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
         accessToken: accessTokens
       },
     });
@@ -136,10 +135,10 @@ router.post('/interestForm', upload.none(), async (req, res) => {
       service: 'gmail',
       auth: {
         type: "OAuth2",
-        user: config.userName,
-        clientId: config.clientId,
-        clientSecret: config.clientSecret,
-        refreshToken: config.refreshToken,
+        user: process.env.GMAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
         accessToken:accessTokens
       },
     });

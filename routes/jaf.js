@@ -133,7 +133,7 @@ router.post('/filled', upload.none(), async (req, res) => {
     });
 
     const mailOptions = {
-      from: `To T&P cell <2021bit046@sggs.ac.in>`,
+      from: `Website Redirected <2021bit046@sggs.ac.in>`,
       // from: '2021bit046@sggs.ac.in',
       // to: 'shivharehariom68@gmail.com',
       to: 'tnpcell@sggs.ac.in',

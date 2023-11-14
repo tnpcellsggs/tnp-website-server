@@ -43,16 +43,12 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
       secure: true, // true for 465, false for other ports
       service: 'gmail',
       auth: {
-        // type: "OAuth2",
-        // user: process.env.GMAIL_USERNAME,
-        // clientId: process.env.OAUTH_CLIENT_ID,
-        // clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        // refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        // accessToken: accessToken_
-
-        type: "login", // default
-        user: process.env.REACT_APP_USER,
-        pass: process.env.REACT_APP_PASSWD
+        type: "OAuth2",
+        user: process.env.GMAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+        accessToken: accessTokens
       },
       tls: {
         rejectUnauthorized: false,
@@ -78,14 +74,32 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
       attachments: filesAttatched,
       // replyTo: emailFrom, // Set the replyTo field with the dynamic email
     }
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).send('Error sending email');
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.send('File uploaded and email sent successfully');
-      }
+
+    await new Promise((resolve, reject) => {
+      // verify connection configuration
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
+    });
+
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error, "Error sending email");
+          reject(error, "Error sending email");
+          // res.status(500).send('Error sending email');
+        } else {
+          console.log('Email sent: ' + info.response);
+          resolve(info, "File uploaded and email sent successfully");
+          // res.send('File uploaded and email sent successfully');
+        }
+      });
     });
   }
   catch (err) {
@@ -108,16 +122,12 @@ router.post('/filled', upload.none(), async (req, res) => {
       secure: true, // true for 465, false for other ports
       service: 'gmail',
       auth: {
-        // type: "OAuth2",
-        // user: process.env.GMAIL_USERNAME,
-        // clientId: process.env.OAUTH_CLIENT_ID,
-        // clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        // refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        // accessToken: accessToken_,
-
-        type: "login", // default
-        user: process.env.REACT_APP_USER,
-        pass: process.env.REACT_APP_PASSWD
+        type: "OAuth2",
+        user: process.env.GMAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+        accessToken: accessTokens
       },
       tls: {
         rejectUnauthorized: false,
@@ -132,14 +142,32 @@ router.post('/filled', upload.none(), async (req, res) => {
       subject: 'JAF For Recruitment',
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${jafFormData.ThisisFrom}\n\n\nMessage:\n${jafFormData.anyMessage}\n\nJAF:\nAbout The Organisation:\n\nName of Organisation: ${jafFormData.nameOrg}\nPostal Address: ${jafFormData.postalAdd}\nWebsite Link(optional): ${jafFormData.websiteLink}\n\nJob Profile:\n\nJob Designation: ${jafFormData.jobDesig}\nJob Description: ${jafFormData.jobDesc}\nJob Location: ${jafFormData.jobLoc}\n\nType Of Organisation:\n${jafFormData.typeOfOrg}\n${jafFormData.typeOfOrgArea}\n\nIndustry Sector:\n${jafFormData.industrySector}\n${jafFormData.industrySectorArea}\n\nContact Details:\n\nHR Head:Name:${jafFormData.HRname}\nEmail:${jafFormData.HRemail}\nPhone:${jafFormData.HRnumber}\nMobile:${jafFormData.HRphone}\n\nFirst Person Contact:Name:${jafFormData.fstname}\nEmail:${jafFormData.fstemail}\nPhone:${jafFormData.fstnumber}\nMobile:${jafFormData.fstphone}\n\nSecond Person Contact:Name:${jafFormData.secname}\nEmail:${jafFormData.secemail}\nPhone:${jafFormData.secnumber}\nMobile:${jafFormData.secphone}\n\nSalary Break Up:\n\nCTC: ${jafFormData.ctc}\nStipend: ${jafFormData.stipend}\nBonus/Perks/Incentives: ${jafFormData.bonus}\n\nEligibility Criteria:\nCGPA: ${jafFormData.cgpa}\nXII %: ${jafFormData.secondaryEdu}\nX %: ${jafFormData.primaryEdu}\n\nSelection Process:\n${jafFormData.personalInterview}\n${jafFormData.selectionCriteria}\n\nRounds:${jafFormData.rounds}\nOffers:${jafFormData.offers}\nPeriod:${jafFormData.period}\n\nLogistics Requirements:\nBTech:\n${jafFormData.btechBranches}\n\nMTech:\n${jafFormData.mtechBranches}\n\n`,
     }
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).send('Error sending email');
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.send('File uploaded and email sent successfully');
-      }
+
+    await new Promise((resolve, reject) => {
+      // verify connection configuration
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
+    });
+
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error, "Error sending email");
+          reject(error, "Error sending email");
+          // res.status(500).send('Error sending email');
+        } else {
+          console.log('Email sent: ' + info.response);
+          resolve(info, "File uploaded and email sent successfully");
+          // res.send('File uploaded and email sent successfully');
+        }
+      });
     });
   }
   catch (err) {
@@ -162,16 +190,12 @@ router.post('/interestForm', upload.none(), async (req, res) => {
       secure: true, // true for 465, false for other ports
       service: 'gmail',
       auth: {
-        // type: "OAuth2",
-        // user: process.env.GMAIL_USERNAME,
-        // clientId: process.env.OAUTH_CLIENT_ID,
-        // clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        // refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        // accessToken: accessToken_,
-
-        type: "login", // default
-        user: process.env.REACT_APP_USER,
-        pass: process.env.REACT_APP_PASSWD
+        type: "OAuth2",
+        user: process.env.GMAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+        accessToken: accessTokens
       },
       tls: {
         rejectUnauthorized: false,
@@ -186,14 +210,32 @@ router.post('/interestForm', upload.none(), async (req, res) => {
       subject: 'Company Interest Form',
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${jafFormData.ThisisFrom}\n\n\nMessage:\n${jafFormData.specifications}\n\nCompany Details:\n\nCompany Name: ${jafFormData.companyName}\nOfficial Email-Id: ${jafFormData.companyEmail}\nCompany's Website Link(optional): ${jafFormData.websiteLink}\n\nContact Information:\n\nHR Mobile No: ${jafFormData.HRmobNo}\nAlternate Contact No: ${jafFormData.HRalterateNo}\nHR Mail ID: ${jafFormData.HRmail}\n\n`,
     }
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).send('Error sending email');
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.send('File uploaded and email sent successfully');
-      }
+    await new Promise((resolve, reject) => {
+      // verify connection configuration
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
+    });
+
+
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error, "Error sending email");
+          reject(error, "Error sending email");
+          // res.status(500).send('Error sending email');
+        } else {
+          console.log('Email sent: ' + info.response);
+          resolve(info, "File uploaded and email sent successfully");
+          // res.send('File uploaded and email sent successfully');
+        }
+      });
     });
   }
   catch (err) {

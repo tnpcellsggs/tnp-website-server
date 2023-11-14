@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGOURI, (err) => {
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
+  // res.setHeader('Content-Type', 'application/json');
   res.json({
     message: "Welcome to homepage"
   });

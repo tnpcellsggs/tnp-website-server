@@ -26,7 +26,9 @@ mongoose.connect(process.env.MONGOURI, (err) => {
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Welcome to homepage");
+  res.json({
+    "message": "Welcome to homepage"
+  });
   // return "Hello";
 });
 

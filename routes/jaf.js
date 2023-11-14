@@ -38,10 +38,10 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
     const emailSub = req.body.subject;
     const emailSpecifications = req.body.specifications;
     const transporter = nodemailer.createTransport({
+      service: 'gmail',
       host: 'smtp.gmail.com',
       port: 465,
       secure: true, // true for 465, false for other ports
-      service: 'gmail',
       auth: {
         type: "OAuth2",
         user: process.env.GMAIL_USERNAME,
@@ -66,7 +66,7 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
     });
 
     const mailOptions = {
-      from: `To T&P cell <2021bit046@sggs.ac.in>`,
+      from: `Website Redirected <2021bit046@sggs.ac.in>`,
       // to: 'tnpcell@sggs.ac.in',
       to: 'shivharehariom68@gmail.com',
       subject: emailSub,
@@ -118,9 +118,7 @@ router.post('/filled', upload.none(), async (req, res) => {
       service: 'gmail',
       host: 'smtp.gmail.com',
       port: 465,
-      secure: true,
       secure: true, // true for 465, false for other ports
-      service: 'gmail',
       auth: {
         type: "OAuth2",
         user: process.env.GMAIL_USERNAME,
@@ -137,8 +135,8 @@ router.post('/filled', upload.none(), async (req, res) => {
     const mailOptions = {
       from: `To T&P cell <2021bit046@sggs.ac.in>`,
       // from: '2021bit046@sggs.ac.in',
-      // to: 'tnpcell@sggs.ac.in',
-      to: 'shivharehariom68@gmail.com',
+      // to: 'shivharehariom68@gmail.com',
+      to: 'tnpcell@sggs.ac.in',
       subject: 'JAF For Recruitment',
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${jafFormData.ThisisFrom}\n\n\nMessage:\n${jafFormData.anyMessage}\n\nJAF:\nAbout The Organisation:\n\nName of Organisation: ${jafFormData.nameOrg}\nPostal Address: ${jafFormData.postalAdd}\nWebsite Link(optional): ${jafFormData.websiteLink}\n\nJob Profile:\n\nJob Designation: ${jafFormData.jobDesig}\nJob Description: ${jafFormData.jobDesc}\nJob Location: ${jafFormData.jobLoc}\n\nType Of Organisation:\n${jafFormData.typeOfOrg}\n${jafFormData.typeOfOrgArea}\n\nIndustry Sector:\n${jafFormData.industrySector}\n${jafFormData.industrySectorArea}\n\nContact Details:\n\nHR Head:Name:${jafFormData.HRname}\nEmail:${jafFormData.HRemail}\nPhone:${jafFormData.HRnumber}\nMobile:${jafFormData.HRphone}\n\nFirst Person Contact:Name:${jafFormData.fstname}\nEmail:${jafFormData.fstemail}\nPhone:${jafFormData.fstnumber}\nMobile:${jafFormData.fstphone}\n\nSecond Person Contact:Name:${jafFormData.secname}\nEmail:${jafFormData.secemail}\nPhone:${jafFormData.secnumber}\nMobile:${jafFormData.secphone}\n\nSalary Break Up:\n\nCTC: ${jafFormData.ctc}\nStipend: ${jafFormData.stipend}\nBonus/Perks/Incentives: ${jafFormData.bonus}\n\nEligibility Criteria:\nCGPA: ${jafFormData.cgpa}\nXII %: ${jafFormData.secondaryEdu}\nX %: ${jafFormData.primaryEdu}\n\nSelection Process:\n${jafFormData.personalInterview}\n${jafFormData.selectionCriteria}\n\nRounds:${jafFormData.rounds}\nOffers:${jafFormData.offers}\nPeriod:${jafFormData.period}\n\nLogistics Requirements:\nBTech:\n${jafFormData.btechBranches}\n\nMTech:\n${jafFormData.mtechBranches}\n\n`,
     }
@@ -164,7 +162,7 @@ router.post('/filled', upload.none(), async (req, res) => {
           // res.status(500).send('Error sending email');
         } else {
           console.log('Email sent: ' + info.response);
-          resolve(info, "File uploaded and email sent successfully");
+          resolve(info, "Email sent successfully");
           // res.send('File uploaded and email sent successfully');
         }
       });
@@ -186,9 +184,7 @@ router.post('/interestForm', upload.none(), async (req, res) => {
       service: 'gmail',
       host: 'smtp.gmail.com',
       port: 465,
-      secure: true,
       secure: true, // true for 465, false for other ports
-      service: 'gmail',
       auth: {
         type: "OAuth2",
         user: process.env.GMAIL_USERNAME,
@@ -203,10 +199,10 @@ router.post('/interestForm', upload.none(), async (req, res) => {
     });
 
     const mailOptions = {
-      from: `To T&P cell <2021bit046@sggs.ac.in>`,
+      from: `Website Redirected <2021bit046@sggs.ac.in>`,
       // from: '2021bit046@sggs.ac.in',
-      // to: 'tnpcell@sggs.ac.in',
-      to: 'shivharehariom68@gmail.com',
+      // to: 'shivharehariom68@gmail.com',
+      to: 'tnpcell@sggs.ac.in',
       subject: 'Company Interest Form',
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${jafFormData.ThisisFrom}\n\n\nMessage:\n${jafFormData.specifications}\n\nCompany Details:\n\nCompany Name: ${jafFormData.companyName}\nOfficial Email-Id: ${jafFormData.companyEmail}\nCompany's Website Link(optional): ${jafFormData.websiteLink}\n\nContact Information:\n\nHR Mobile No: ${jafFormData.HRmobNo}\nAlternate Contact No: ${jafFormData.HRalterateNo}\nHR Mail ID: ${jafFormData.HRmail}\n\n`,
     }
@@ -232,7 +228,7 @@ router.post('/interestForm', upload.none(), async (req, res) => {
           // res.status(500).send('Error sending email');
         } else {
           console.log('Email sent: ' + info.response);
-          resolve(info, "File uploaded and email sent successfully");
+          resolve(info, "Email sent successfully");
           // res.send('File uploaded and email sent successfully');
         }
       });

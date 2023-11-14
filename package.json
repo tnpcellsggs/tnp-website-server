@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "dev":"nodemon server.js",
+    "build":"npm run build",
     "test": "echo \"Error: no test specific\" && exit 1"
   },
   "author": "",

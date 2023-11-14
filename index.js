@@ -26,8 +26,9 @@ mongoose.connect(process.env.MONGOURI, (err) => {
 app.use(express.json());
 
 app.get("/", (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
   res.json({
-    "message": "Welcome to homepage"
+    message: "Welcome to homepage"
   });
   // return "Hello";
 });
@@ -42,8 +43,8 @@ app.use("/newsUpdates", News);
 
 const PORT = process.env.PORT || 4019;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`,`http://localhost:${PORT}`);
 });
 
 // Export the express API
-module.exports = app;
+// module.exports = app;

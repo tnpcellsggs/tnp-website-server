@@ -71,7 +71,7 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
       to: 'shivharehariom68@gmail.com',
       subject: emailSub,
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${emailFrom}\n\n\nMessage: ${emailSpecifications}\n\n\nPlease find the attachment`,
-      attachments: filesAttatched,
+      // attachments: filesAttatched,
       // replyTo: emailFrom, // Set the replyTo field with the dynamic email
     }
 
@@ -133,7 +133,7 @@ router.post('/filled', upload.none(), async (req, res) => {
     });
 
     const mailOptions = {
-      from: `To T&P cell <2021bit046@sggs.ac.in>`,
+      from: `Website Redirected <2021bit046@sggs.ac.in>`,
       // from: '2021bit046@sggs.ac.in',
       // to: 'shivharehariom68@gmail.com',
       to: 'tnpcell@sggs.ac.in',

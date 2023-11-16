@@ -11,8 +11,9 @@ require('dotenv').config();
 // storage to store the uploaded files locally to send after the request is fullfilled
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './tmp/');
-    // cb(null, path.join(__dirname, './tmp/'));
+    // cb(null, './tmp/');
+    let tempDir = '/tmp';
+    cb(null, path.join(tempDir, file.originalname));
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);

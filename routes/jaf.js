@@ -11,9 +11,8 @@ require('dotenv').config();
 // storage to store the uploaded files locally to send after the request is fullfilled
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    // cb(null, './uploads');
-    cb(null, path.join(__dirname, '../uploads'));
-    // console.log( path.join(__dirname, '../uploads'))
+    // cb(null, './tmp/');
+    cb(null, path.join(__dirname, './tmp/'));
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
@@ -38,7 +37,7 @@ oAuth2Client.setCredentials({
 // 1) endpoint where the form is uploaded as a file
 // same name as formData.append('file', file); i.e 'file' as 1st parameter
 router.post('/uploaded', upload.array('file'), async (req, res) => {
-  console.log( path.join(__dirname, '../uploads'))
+  // console.log( path.join(__dirname, '../uploads'))
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).send('No files were uploaded.');
@@ -76,6 +75,7 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
       return {
         filename: file.originalname,
         path: file.path,
+        // path: file.id.toString(), // uses the file ID from GridFS
         encoding: 'base64',
         contentType: mime.lookup(file.originalname) || 'application/octet-stream',
         contentDisposition: 'attachment',

@@ -5,17 +5,21 @@ const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const multer = require('multer');
 const mime = require('mime-types');
+const path = require('path');
 require('dotenv').config();
 
 // storage to store the uploaded files locally to send after the request is fullfilled
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads');
+    // cb(null, './uploads');
+    cb(null, path.join(__dirname, '../uploads'));
+    // console.log( path.join(__dirname, '../uploads'))
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
 });
+
 
 // uploads the files to the local storage
 const upload = multer({
@@ -34,7 +38,11 @@ oAuth2Client.setCredentials({
 // 1) endpoint where the form is uploaded as a file
 // same name as formData.append('file', file); i.e 'file' as 1st parameter
 router.post('/uploaded', upload.array('file'), async (req, res) => {
+
   try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).send('No files were uploaded.');
+    }
 
     // generates the access token after it expires
     const accessTokens = await oAuth2Client.getAccessToken();
@@ -76,9 +84,9 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
 
     // mail objects
     const mailOptions = {
-      // to: 'shivharehariom68@gmail.com',
+      to: 'shivharehariom68@gmail.com',
       from: `Website Redirected <2021bit046@sggs.ac.in>`,
-      to: 'tnpcell@sggs.ac.in',
+      // to: 'tnpcell@sggs.ac.in',
       subject: emailSub,
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${emailFrom}\n\n\nMessage: ${emailSpecifications}\n\n\nPlease find the attachment`,
       attachments: filesAttatched,
@@ -109,13 +117,14 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
         } else {
           console.log('Email sent: ' + info.response);
           resolve(info, "File uploaded and email sent successfully");
-          res.send('File uploaded and email sent successfully');
+          res.status(200).send('File uploaded and email sent successfully');
         }
       });
     });
   }
   catch (err) {
-    res.send("Some error occured");
+    console.error(err);
+    res.status(500).send("Some error occured");
   }
 
 });

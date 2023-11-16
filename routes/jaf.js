@@ -38,7 +38,7 @@ oAuth2Client.setCredentials({
 // 1) endpoint where the form is uploaded as a file
 // same name as formData.append('file', file); i.e 'file' as 1st parameter
 router.post('/uploaded', upload.array('file'), async (req, res) => {
-
+  console.log( path.join(__dirname, '../uploads'))
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).send('No files were uploaded.');
@@ -84,9 +84,9 @@ router.post('/uploaded', upload.array('file'), async (req, res) => {
 
     // mail objects
     const mailOptions = {
-      to: 'shivharehariom68@gmail.com',
+      // to: 'shivharehariom68@gmail.com',
       from: `Website Redirected <2021bit046@sggs.ac.in>`,
-      // to: 'tnpcell@sggs.ac.in',
+      to: 'tnpcell@sggs.ac.in',
       subject: emailSub,
       text: `This mail is redirected from <2021bit046@sggs.ac.in>\n\nFrom: ${emailFrom}\n\n\nMessage: ${emailSpecifications}\n\n\nPlease find the attachment`,
       attachments: filesAttatched,

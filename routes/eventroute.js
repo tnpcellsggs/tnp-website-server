@@ -16,7 +16,7 @@ router.post("/create", async (req, res) => {
     const thisevent = await newEvent.save();
     res.status(200).json(thisevent);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 });
 
@@ -61,7 +61,7 @@ router.put("/editEvent", async (req, res) => {
       res.status(200).json(record);
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 });
 

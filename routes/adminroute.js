@@ -5,7 +5,7 @@ const Admin = require("../models/admin");
 // const jwt = require('jsonwebtoken');
 
 // for password encryption
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 router.post("/", async (req, res) => {
   try {
@@ -15,8 +15,8 @@ router.post("/", async (req, res) => {
     // a secret password is created here using the bcrypt js library module and used to encypt the password
 
     // now it was created using the following code and stored in database
-    const salt = await bcrypt.genSalt(10);
-    const secretPassword = await bcrypt.hash(req.body.password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const secretPassword = await bcrypt.hash(req.body.password, salt);
 
     // creating a payload
     let payload = {
@@ -30,13 +30,13 @@ router.post("/", async (req, res) => {
 
     // a hash is created of the entered password using the entered password
     // the password in database is stored by encrypting the secret_auth_key, so the hash matches with stored hash it unlocks the sign in option
-    let passwordCompare = await bcrypt.compare(secretPassword, admin.password);
+    // let passwordCompare = await bcrypt.compare(secretPassword, admin.password);
 
-    if (!passwordCompare) {
-      return res.status(400).json({
-        error: "Invalid Credentials"
-      });
-    }
+    // if (!passwordCompare) {
+    //   return res.status(400).json({
+    //     error: "Invalid Credentials"
+    //   });
+    // }
     // !admin && res.status(404).json("User not found");
     // const password = await Admin.findOne({ password: authToken });
     // !password && res.status(401).json("Wrong password");

@@ -32,11 +32,11 @@ router.post("/", async (req, res) => {
     // the password in database is stored by encrypting the secret_auth_key, so the hash matches with stored hash it unlocks the sign in option
     let passwordCompare = await bcrypt.compare(secretPassword, admin.password);
 
-    // if (!passwordCompare) {
-    //   return res.status(400).json({
-    //     error: "Invalid Credentials"
-    //   });
-    // }
+    if (!passwordCompare) {
+      return res.status(400).json({
+        error: "Invalid Credentials"
+      });
+    }
     // !admin && res.status(404).json("User not found");
     // const password = await Admin.findOne({ password: authToken });
     // !password && res.status(401).json("Wrong password");
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
     res.status(200).json({ ok: 'ok' });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    // res.status(500).json(err);
   }
 });
 

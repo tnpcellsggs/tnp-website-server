@@ -32,6 +32,8 @@ router.get("/getAllNews", async (request, response) => {
         response.status(400).send("Internal Error Occured");
     }
 });
+
+
 // ROUTE 3: Post request "/newsUpdates/editNews"
 router.put("/editNews", async (request, response) => {
     try {
@@ -70,7 +72,6 @@ router.put("/editNews", async (request, response) => {
 // ROUTE 4: Post request "/newsUpdates/delete"
 router.delete("/delete", async (request, response) => {
     try {
-        // creating a new document for every year record
         let ID = request.body.ID;
         let record = await NewsUpdate.find({ ID: ID });
         if (record.length === 0) {
